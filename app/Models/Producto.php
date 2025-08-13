@@ -46,4 +46,16 @@ class Producto {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function obtenerIdPorNombreYReferencia($nombre, $referencia) {
+    $sql = "SELECT producto_id FROM {$this->table_name} 
+            WHERE nombre = :nombre AND referencia = :referencia LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(":nombre", $nombre);
+    $stmt->bindParam(":referencia", $referencia);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $row ? $row['producto_id'] : null;
+}
+
 }
