@@ -1,10 +1,12 @@
 <?php
-class DevolucionController {
+class DevolucionController
+{
     private $devolucionModel;
     private $vendedorModel;
     private $productoModel;
 
-    public function __construct($devolucionModel, $vendedorModel, $productoModel) {
+    public function __construct($devolucionModel, $vendedorModel, $productoModel)
+    {
         $this->devolucionModel = $devolucionModel;
         $this->vendedorModel = $vendedorModel;
         $this->productoModel = $productoModel;
@@ -13,7 +15,8 @@ class DevolucionController {
     /**
      * Importar devoluciones desde CSV
      */
-    public function importarCSV($rutaArchivo) {
+    public function importarCSV($rutaArchivo)
+    {
         if (!file_exists($rutaArchivo)) {
             die("Archivo CSV no encontrado: " . $rutaArchivo);
         }
@@ -33,6 +36,13 @@ class DevolucionController {
                     $tipoOperacion,
                     $motivo
                 ) = $row;
+
+                /* echo "[$tipoOperacion]\n"; */
+
+                // Filtrar solo motivo "devolucion" (ignora mayúsculas/minúsculas y espacios)
+                if (strcasecmp(trim($tipoOperacion), "Devolucion") !== 0) {
+                    continue;
+                }
 
                 // Buscar IDs existentes
                 $vendedorId = $this->vendedorModel->obtenerIdPorNombre($vendedorNombre);
