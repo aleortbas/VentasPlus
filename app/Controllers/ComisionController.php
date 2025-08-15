@@ -6,7 +6,19 @@ class ComisionController {
         $this->comisionModel = $comisionModel;
     }
 
-    public function listar() {
+    public function listarComisionMensual() {
         return $this->comisionModel->obtenerComisionesMensuales();
+    }
+
+    public function listarTopCincoComision() {
+        return $this->comisionModel->topCincoComision();
+    }
+
+    public function listarTotalComisionMes(){
+        return $this->comisionModel->totalComisionMes();
+    }
+
+    public function listarPorcentajeVendedoresConBono(){
+        return $this->comisionModel->porcentajeVendedoresConBono();
     }
 }

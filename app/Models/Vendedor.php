@@ -1,16 +1,19 @@
 <?php
-class Vendedor {
+class Vendedor
+{
     private $conn;
     private $table_name = "vendedores";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
     /**
      * Inserta un vendedor si no existe y devuelve su ID
      */
-    public function insertarSiNoExiste($nombre) {
+    public function insertarSiNoExiste($nombre)
+    {
         // 1. Buscar si ya existe
         $sql = "SELECT vendedor_id FROM {$this->table_name} WHERE nombre = :nombre LIMIT 1";
         $stmt = $this->conn->prepare($sql);
@@ -34,23 +37,26 @@ class Vendedor {
     /**
      * Obtener todos los vendedores
      */
-    public function obtenerTodos() {
+    public function obtenerTodos()
+    {
         $sql = "SELECT * FROM {$this->table_name} ORDER BY nombre ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function obtenerIdPorNombre($nombre) {
-    $sql = "SELECT vendedor_id FROM {$this->table_name} WHERE nombre = :nombre LIMIT 1";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bindParam(":nombre", $nombre);
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    return $row ? $row['vendedor_id'] : null;
-}
-public function consolidadoPorVendedor($vendedorId){
-    $sql = "
+    public function obtenerIdPorNombre($nombre)
+    {
+        $sql = "SELECT vendedor_id FROM {$this->table_name} WHERE nombre = :nombre LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(":nombre", $nombre);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $row['vendedor_id'] : null;
+    }
+    public function consolidadoPorVendedor($vendedorId)
+    {
+        $sql = "
         SELECT 
             vendedor,
             -- Totales
@@ -110,8 +116,8 @@ public function consolidadoPorVendedor($vendedorId){
         GROUP BY vendedor";
 
         $stmt = $this->conn->prepare($sql);
-    $stmt->bindParam(':vendedorId', $vendedorId, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
+        $stmt->bindParam(':vendedorId', $vendedorId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

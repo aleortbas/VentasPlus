@@ -8,4 +8,18 @@ $model = new Comision($db);
 $controller = new ComisionController($model);
 
 header('Content-Type: application/json');
-echo json_encode($controller->listar());
+echo "listarComisionMensual: \n";
+echo json_encode($controller->listarComisionMensual());
+echo"</pre>";
+
+echo "<pre> listarTopCincoComision: \n";
+echo json_encode($controller->listarTopCincoComision());
+echo"</pre>";
+
+echo "<pre> listarTotalComisionMes: \n";
+echo json_encode($controller->listarTotalComisionMes());
+echo"</pre>";
+
+echo "<pre> listarPorcentajeVendedoresConBono: \n";
+echo json_encode($controller->listarPorcentajeVendedoresConBono());
+echo"</pre>";
