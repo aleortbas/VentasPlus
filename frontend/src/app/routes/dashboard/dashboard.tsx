@@ -10,7 +10,7 @@ export default function Dashboard() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await fetch("http://localhost/backend/Public/api/comisiones.php", {
+                const res = await fetch("http://localhost:8000/Public/api/comisiones.php", {
                     method: "GET",
                     mode: "cors"
                 });
