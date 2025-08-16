@@ -41,14 +41,43 @@ export default function Index() {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <input type="file" accept=".xlsx,.xls,.csv" onChange={handleFileChange} />
-                <button type="submit">Subir Excel</button>
-            </form>
-            <div>
-                <button onClick={() => handleNavigation('/dashboard')} className="bg-red-500" name="artist">Dashboard</button>
-                <button onClick={() => handleNavigation('/comision')} className="bg-red-500" name="artist">Comisiones</button>
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
+                <h1 className="text-3xl font-bold mb-6 text-gray-800">Reportes de Vendedores</h1>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col sm:flex-row items-center gap-4 mb-8 w-full max-w-md"
+                >
+                    <input
+                        type="file"
+                        accept=".xlsx,.xls,.csv"
+                        onChange={handleFileChange}
+                        className="border border-gray-300 rounded-md p-2 w-full sm:w-auto"
+                    />
+                    <button
+                        type="submit"
+                        className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                    >
+                        Subir Excel
+                    </button>
+                </form>
+
+                <div className="flex gap-4">
+                    <button
+                        onClick={() => handleNavigation('/dashboard')}
+                        className="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition"
+                    >
+                        Dashboard
+                    </button>
+                    <button
+                        onClick={() => handleNavigation('/comision')}
+                        className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600 transition"
+                    >
+                        Comisiones
+                    </button>
+                </div>
             </div>
         </>
+
     )
 }
