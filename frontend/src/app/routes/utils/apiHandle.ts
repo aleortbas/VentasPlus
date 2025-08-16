@@ -9,8 +9,8 @@ export async function submitToApi(
 
     // Definir endpoints disponibles
     const endpoints: Record<string, { method: string, url: string }> = {
-        vendedores: { method: "POST", url: "http://localhost/backend/Public/api/vendedores.php" },
-        comisiones: { method: "GET", url: "http://localhost/backend/Public/api/comisiones.php" }
+        vendedores: { method: "POST", url: "http://localhost/backend/Public/api/vendedores.php" }/* ,
+        comisiones: { method: "GET", url: "http://localhost/backend/Public/api/comisiones.php" } */
     };
 
     const config = endpoints[api];

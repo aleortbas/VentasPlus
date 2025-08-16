@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+
 import { submitToApi } from "../utils/apiHandle.ts";
 
 
@@ -16,18 +18,16 @@ export default function Index() {
     useEffect(() => {
         console.log("vendedor:", vendedorData);
     }, [vendedorData]);
-    /* const content = vendedor?.result?.message?.content || artistData?.result?.aiCall?.message?.content;
 
-    console.log("type of content:", typeof content); */
+    const navigate = useNavigate();
+
+    const handleNavigation = (path: string) => {
+      navigate(path);
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" className="border border-gray-300 p-2 mb-4" placeholder="Enter your artist name"
-                    onChange={(e) => setVendedor(e.target.value)} value={vendedor}
-                />
-            <button type="submit" name="vendedores">Enviar Vendedores</button>
-            <button type="submit" name="comisiones">Obtener Comisiones</button>
-        </form>
-
+        <div>
+            <button onClick={() => handleNavigation('/Dashboard')} className="bg-red-500" name="artist">Dashboard</button>
+        </div>
     )
 }
