@@ -1,19 +1,22 @@
 export async function submitToApi(
-    e: React.FormEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement> | null,
     vendedorId: string,
-    nombre: string
+    nombre: string,
+    apiName?: string // indicar la API si no viene de form
 ): Promise<any> {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
-    // El botón que disparó el submit (vendedores o comisiones)
-    let api = e.nativeEvent.submitter.name;
+    console.log("NOMBRE: ", nombre);
+    console.log("VENDEDOR ID: ", vendedorId);
 
-    // Definir endpoints disponibles
+    // Determinar qué API usar
+    const api = e ? e.nativeEvent.submitter.name : apiName;
+
     const endpoints: Record<string, { method: string, url: string }> = {
         vendedores: { method: "POST", url: "http://localhost:8000/Public/api/vendedores.php" }
     };
 
-    const config = endpoints[api];
+    const config = endpoints[api!];
     if (!config) {
         console.error("API no reconocida:", api);
         return;
@@ -27,13 +30,9 @@ export async function submitToApi(
             headers: {}
         };
 
-        // Solo POST lleva body
         if (config.method === "POST") {
             options.headers!["Content-Type"] = "application/json";
-            options.body = JSON.stringify({
-                vendedorId,
-                nombre
-            });
+            options.body = JSON.stringify({ vendedorId, nombre });
         }
 
         console.log("Realizando solicitud a la API:", config.url, options);
