@@ -63,7 +63,7 @@ class Vendedor
                 anio, 
                 mes,
                 SUM(ventas) AS total_ventas,
-                SUM(ventas) * 0.05 AS comision_base,
+                ROUND(SUM(ventas) * 0.05) AS comision_base,
                 CASE WHEN SUM(ventas) > 50000000 THEN SUM(ventas) * 0.02 ELSE 0 END AS bono,
                 CASE WHEN (SUM(devoluciones)/SUM(ventas)) > 0.05 THEN SUM(ventas) * 0.01 ELSE 0 END AS penalizacion,
                 (SUM(ventas) * 0.05) 
