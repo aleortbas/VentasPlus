@@ -12,25 +12,18 @@ export default function Comisiones() {
 
     async function handleSubmit(vendedorId: string, nombre: string) {
         try {
-            // Pasamos apiName porque no viene de un form
             const response = await submitToApi(null, vendedorId, nombre, "vendedores");
-            setDataVendedor(response);
+
+            setDataVendedor({
+                ...response,
+                consolidadoPorVendedor: Array.isArray(response.consolidadoPorVendedor)
+                    ? response.consolidadoPorVendedor
+                    : [response.consolidadoPorVendedor] // convertimos a array si viene como objeto
+            });
         } catch (error) {
             console.error("Error al enviar datos:", error);
         }
     }
-
-    async function handleSubmitForm(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault(); // evita la recarga
-        try {
-            const response = await submitToApi(null, null, nombre, "vendedores");
-            setDataVendedor(response);
-        } catch (error) {
-            console.error("Error al enviar datos:", error);
-        }
-    }
-
-
 
     useEffect(() => {
         console.log("dataVendedor:", dataVendedor);
@@ -41,9 +34,8 @@ export default function Comisiones() {
                     mode: "cors"
                 });
                 const json = await res.json();
-                const dataVendedores = json?.listarTodos || [];
+                const dataVendedores = json || [];
                 setData(dataVendedores);
-                console.log("Datos recibidos:", dataVendedores);
             } catch (error) {
                 console.error("Error cargando datos:", error);
             }
@@ -57,16 +49,7 @@ export default function Comisiones() {
     return (
         <div>
             <h1>comisiones</h1>
-            <form onSubmit={handleSubmitForm}>
-                <h1 className="text-2xl font-bold mb-4">INPUT</h1>
-                <input type="text" className="border border-gray-300 p-2 mb-4" placeholder="Enter your artist name"
-                    onChange={(e) => setNombre(e.target.value)} value={nombre}
-                />
-                <button type="submit" className="bg-red-500" name="vendedores">Buscar</button>
-            </form>
-
             <h2 className="text-xl font-bold mb-4">📋 Consolidado de comisiones</h2>
-
             <table border="1">
                 <thead>
                     <tr>
@@ -76,7 +59,7 @@ export default function Comisiones() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data?.listarTodos?.map((item, index) => (
                         <tr key={index}>
                             <td>{item.nombre}</td>
                             <td>{item.fecha_creacion}</td>
@@ -87,6 +70,32 @@ export default function Comisiones() {
                     ))}
                 </tbody>
             </table>
+
+            {dataVendedor?.consolidadoPorVendedor?.map((item, index) => (
+                <div key={index} className="mt-4">
+                    <h3 className="text-lg font-semibold">{item.vendedor} - {item.mes}/{item.anio}</h3>
+                    <table border={1}>
+                        <thead>
+                            <tr>
+                                <th>Total Ventas</th>
+                                <th>Comisión Base</th>
+                                <th>Bono</th>
+                                <th>Penalización</th>
+                                <th>Comisión Final</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{item.total_ventas}</td>
+                                <td>{item.comision_base}</td>
+                                <td>{item.bono}</td>
+                                <td>{item.penalizacion}</td>
+                                <td>{item.comision_final}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            ))}
         </div>
     )
 }

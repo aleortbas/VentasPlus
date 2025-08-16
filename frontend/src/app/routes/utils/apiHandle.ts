@@ -40,7 +40,6 @@ export async function submitToApi(
         const res = await fetch(config.url, options);
         const data = await res.json();
 
-        console.log("Respuesta de la API:", data);
         return data;
     } catch (error) {
         console.error("Error al hacer la solicitud:", error);
