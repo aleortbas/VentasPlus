@@ -7,7 +7,15 @@ class VendedorController {
     }
 
     // Listar uno específico
-    public function listar($id = null) {
+    public function consolidadoPorVendedor($id = null) {
         return $this->VendedorModel->consolidadoPorVendedor($id);
+    }
+
+    public function listarTodos() {
+        return $this->VendedorModel->obtenerTodos();
+    }
+
+    public function obtenerIdPorNombre($nombre = null) {
+        return $this->VendedorModel->obtenerIdPorNombre($nombre);
     }
 }

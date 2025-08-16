@@ -1,6 +1,7 @@
 export async function submitToApi(
     e: React.FormEvent<HTMLFormElement>,
     vendedorId: string,
+    nombre: string
 ): Promise<any> {
     e.preventDefault();
 
@@ -9,8 +10,7 @@ export async function submitToApi(
 
     // Definir endpoints disponibles
     const endpoints: Record<string, { method: string, url: string }> = {
-        vendedores: { method: "POST", url: "http://localhost/backend/Public/api/vendedores.php" }/* ,
-        comisiones: { method: "GET", url: "http://localhost/backend/Public/api/comisiones.php" } */
+        vendedores: { method: "POST", url: "http://localhost:8000/Public/api/vendedores.php" }
     };
 
     const config = endpoints[api];
@@ -31,7 +31,8 @@ export async function submitToApi(
         if (config.method === "POST") {
             options.headers!["Content-Type"] = "application/json";
             options.body = JSON.stringify({
-                vendedorId
+                vendedorId,
+                nombre
             });
         }
 

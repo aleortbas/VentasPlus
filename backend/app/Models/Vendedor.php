@@ -47,13 +47,14 @@ class Vendedor
 
     public function obtenerIdPorNombre($nombre)
     {
-        $sql = "SELECT vendedor_id FROM {$this->table_name} WHERE nombre = :nombre LIMIT 1";
+        $sql = "SELECT vendedor_id,nombre FROM {$this->table_name} WHERE nombre = :nombre LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(":nombre", $nombre);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ? $row['vendedor_id'] : null;
+        return $row;
     }
+    
     public function consolidadoPorVendedor($vendedorId)
     {
         $sql = "

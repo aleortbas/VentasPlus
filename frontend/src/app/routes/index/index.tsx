@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { submitToApi } from "../utils/apiHandle.ts";
 
-
 export default function Index() {
 
     const [vendedor, setVendedor] = React.useState("");
@@ -27,7 +26,8 @@ export default function Index() {
 
     return (
         <div>
-            <button onClick={() => handleNavigation('/Dashboard')} className="bg-red-500" name="artist">Dashboard</button>
+            <button onClick={() => handleNavigation('/dashboard')} className="bg-red-500" name="artist">Dashboard</button>
+            <button onClick={() => handleNavigation('/comision')} className="bg-red-500" name="artist">Comisiones</button>
         </div>
     )
 }
