@@ -6,6 +6,7 @@ import { submitToApi } from "../utils/apiHandle.ts";
 export default function Index() {
 
     const [file, setFile] = useState<File | null>(null);
+    const [serverResponse, setServerResponse] = React.useState<any>(null);
 
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,10 +29,15 @@ export default function Index() {
             });
             const data = await res.json();
             console.log("Respuesta del servidor:", data);
+
+            // Guardar la respuesta en el estado
+            setServerResponse(data);
         } catch (error) {
             console.error("Error al subir archivo:", error);
+            setServerResponse({ success: false, message: "Error de conexión" });
         }
     };
+
 
     const navigate = useNavigate();
 
@@ -43,6 +49,14 @@ export default function Index() {
         <>
             <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
                 <h1 className="text-3xl font-bold mb-6 text-gray-800">Reportes de Vendedores</h1>
+                {serverResponse && (
+                    <div className={`mt-4 p-4 rounded-md ${serverResponse.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {serverResponse.success
+                            ? `Éxito! Resultado: ${JSON.stringify(serverResponse.result)}`
+                            : `Error: ${serverResponse.message}`
+                        }
+                    </div>
+                )}
 
                 <form
                     onSubmit={handleSubmit}

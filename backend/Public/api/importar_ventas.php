@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', 0);
 require_once '../../app/Core/cors.php';
 
 require_once '../../app/Core/Database.php';
@@ -43,3 +45,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
+exit;

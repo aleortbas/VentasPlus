@@ -25,8 +25,6 @@ class Producto {
         // 2. Insertar si no existe
         $sql = "INSERT INTO productos (nombre,referencia,precio_base)
                 VALUES (:nombre, :referencia, :precio_base)";
-        echo"<pre> valorUnitario";
-        print_r($valorUnitario);
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'nombre' => $nombre,
